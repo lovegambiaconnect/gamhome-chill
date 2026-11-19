@@ -281,7 +281,7 @@
       msg("#membershipMessage","We have returned from checkout, but could not find the payment reference. Please contact support before paying again.",true);
       return;
     }
-    msg("#membershipMessage","Thank you. We are confirming your payment securely with Modem Pay…");
+    msg("#membershipMessage","Thank you. We are checking your payment status…");
     for(let attempt=0;attempt<15;attempt++){
       const {data,error}=await sb.from("wear_membership_payments").select("status,amount_gmd,currency,paid_at").eq("id",paymentId).eq("user_id",currentUser.id).maybeSingle();
       if(error){
@@ -306,7 +306,7 @@
       }
       if(attempt<14)await new Promise(resolve=>setTimeout(resolve,2000));
     }
-    msg("#membershipMessage","Your payment is still awaiting confirmation from Modem Pay. Please do not pay again. Refresh this page in a moment; your membership will activate when confirmation arrives.");
+    msg("#membershipMessage","Your payment is still awaiting confirmation. Please do not pay again. Contact support for assistance.");
   }
 
   async function loadMembershipPanel(){
@@ -338,7 +338,7 @@
     if(!sb||!currentUser){showAuth("signin");return;}
     const originalText=button.textContent;
     button.disabled=true;button.textContent="Opening payment…";
-    msg("#membershipMessage","Connecting securely to Modem Pay…");
+    msg("#membershipMessage","Membership payments are temporarily unavailable.");
     try{
       const {data,error}=await sb.functions.invoke("modem-membership-checkout",{body:{plan_id:button.dataset.membershipPlan,payment_method:"wave"}});
       if(error){
