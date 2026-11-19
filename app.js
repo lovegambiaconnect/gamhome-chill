@@ -327,7 +327,7 @@
     const plans=plansResult.data||[];
     host.innerHTML=statusLine+(plans.length?plans.map(plan=>{
       const amount=Number(plan.price_gmd).toLocaleString("en-GM");
-      return '<div class="compact-item" style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 0"><div><b>'+escapeHtml(plan.plan_name)+'</b><small class="tiny muted" style="display:block">'+escapeHtml(String(plan.duration_days))+' days of membership</small></div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b>'+escapeHtml(plan.currency||"GMD")+' '+escapeHtml(amount)+'</b><button class="btn btn-gold btn-small" type="button" data-membership-plan="'+escapeHtml(plan.id)+'" data-membership-method="wave">Pay with Wave</button></div></div>';
+      return '<div class="compact-item" style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 0"><div><b>'+escapeHtml(plan.plan_name)+'</b><small class="tiny muted" style="display:block">'+escapeHtml(String(plan.duration_days))+' days of membership</small></div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b>'+escapeHtml(plan.currency||"GMD")+' '+escapeHtml(amount)+'</b><button class="btn btn-gold btn-small" type="button" data-membership-plan="'+escapeHtml(plan.id)+'" disabled>Payments unavailable</button></div></div>';
     }).join(""):'<p class="tiny">No membership plans are available right now.</p>');
     if(membershipResult.error)msg("#membershipMessage","Your available plans are shown, but current membership status could not be checked.",true);
     else msg("#membershipMessage","");
