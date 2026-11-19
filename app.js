@@ -243,8 +243,6 @@
     const {data,error}=await sb.from("adult_creator_profiles").select("*").eq("id",currentUser.id).maybeSingle();
     if(data){$("#displayName").value=data.display_name||currentUser.user_metadata?.display_name||"";$("#bio").value=data.bio||"";$("#country").value=data.country||"";}
     else if(error)msg("#profileMessage",error.message,true);
-    const tiers=await sb.from("adult_subscription_tiers").select("*").eq("creator_id",currentUser.id).order("created_at",{ascending:false});
-    $("#tierList").innerHTML=tiers.data?.length?tiers.data.map(t=>'<div class="compact-item"><span>'+escapeHtml(t.tier_name||"Membership")+'</span><b>'+escapeHtml(t.currency||"USD")+' '+((Number(t.price_minor||0)/100).toFixed(2))+'</b></div>').join(""):'<p class="tiny">Your membership tiers will appear here.</p>';
     const media=await sb.from("adult_creator_media").select("id,media_type,title,created_at,moderation_status,storage_bucket,media_url").eq("creator_id",currentUser.id).eq("media_type","video").order("created_at",{ascending:false});
     if(media.error){msg("#mediaMessage",media.error.message,true);$("#mediaList").innerHTML='<p class="tiny">Your video gallery could not be loaded. Please refresh and try again.</p>';}
     else if(media.data?.length){
