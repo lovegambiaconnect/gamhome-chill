@@ -399,13 +399,6 @@
       msg("#profileMessage",error.message||"Could not save profile. Please try again.",true);
     }finally{button.disabled=false;button.textContent="Save profile";}
   });
-  $("#tierForm").addEventListener("submit",async e=>{
-    e.preventDefault();if(!sb||!currentUser)return;
-    const f=new FormData(e.currentTarget), price=Math.round(Number(f.get("price"))*100);
-    const {error}=await sb.from("adult_subscription_tiers").insert({creator_id:currentUser.id,tier_name:String(f.get("tier_name")).trim(),description:String(f.get("description")||"").trim(),price_minor:price,currency:"USD",is_active:false});
-    msg("#tierMessage",error?error.message:"Tier saved as an inactive pricing idea. Payment processing is not enabled.",!!error);
-    if(!error){e.currentTarget.reset();loadDashboard();}
-  });
   $("#mediaForm").addEventListener("submit",async e=>{
     e.preventDefault();if(!sb||!currentUser)return;
     const form=e.currentTarget, f=new FormData(form), file=f.get("media_file");
