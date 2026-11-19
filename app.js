@@ -206,9 +206,23 @@
   }
   async function loadCreators(){
     const grid=$("#creatorGrid");
-    const {data,error}=await sb.from("adult_creator_profiles").select("id,display_name,bio,country,avatar_url,moderation_status,is_adult_verified,identity_verified,consent_reviewed").limit(12);
-    if(error){console.warn("Could not load approved creator profiles:",error);return;}
-    const rows=(data||[]).filter(x=>x.moderation_status==="approved"&&x.is_adult_verified===true&&x.identity_verified===true&&x.consent_reviewed===true);
+    if(!grid||!sb)return;
+    grid.innerHTML='<div class="empty-state">Loading approved creator channels…</div>';
+    const {data,error}=await sb.from("adult_creator_profiles")
+      .select("id,display_name,bio,country,avatar_url,moderation_status,is_approved,is_adult_verified,identity_verified,consent_reviewed")
+      .eq("is_approved",true)
+      .eq("moderation_status","approved")
+      .eq("is_adult_verified",true)
+      .eq("identity_verified",true)
+      .eq("consent_reviewed",true)
+      .order("created_at",{ascending:false})
+      .limit(50);
+    if(error){
+      console.warn("Could not load approved creator profiles:",error);
+      grid.innerHTML='<div class="empty-state">Creator channels could not be loaded. Please refresh and try again.</div>';
+      return;
+    }
+    const rows=data||[];
     if(rows.length){
       grid.innerHTML=rows.map(p=>'<article class="creator-card"><div class="creator-avatar">'+escapeHtml((p.display_name||"C").slice(0,1).toUpperCase())+'</div><h3>'+escapeHtml(p.display_name||"Creator")+'</h3><p>'+escapeHtml(p.bio||"Independent creator")+'</p><div class="creator-meta"><span>✓ APPROVED</span><span>'+escapeHtml(p.country||"COMMUNITY")+'</span></div></article>').join("");
     }else{
