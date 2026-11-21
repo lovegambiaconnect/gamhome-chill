@@ -1,26 +1,33 @@
-# WEAR CONDOM
+# Gamhome&Chill
 
-Standalone 18+ creator community and sexual-wellness starter site.
+**Your Home. Your Movies. Your Entertainment.**
 
-## Separate backend
-- Supabase project: `cxqijbdtcaqyttbfzqds`
-- Public tables used: `adult_creator_profiles`, `adult_creator_media`, `adult_subscription_tiers`, `adult_subscriptions`, `adult_wellness_articles`
-- This project is separate from Love Gambia Connect.
+Gamhome&Chill is an independent streaming platform for movies, series, short films and creator channels, with a focus on Gambian and African storytelling.
 
-## Supabase browser configuration
-Edit `config.js` and replace `PASTE_YOUR_SUPABASE_ANON_PUBLIC_KEY_HERE` with the project's **anon/public** key. Never use the `service_role` key in browser code. The public key is safe to expose only when Row Level Security and policies are correctly configured.
+## Platform features
+- Viewer registration and sign-in through Supabase Auth
+- Public library of approved movies and videos
+- Creator profiles and private video uploads for moderation
+- Private video storage and signed playback URLs
+- Creator studio with stream progress, revenue and payout history
+- Admin moderation queue
+- Hybrid monetization foundation for qualified streams, advertisements, subscriptions and movie rentals
 
-## Features
-- 18+ entry self-attestation
-- Email/password registration and sign-in through Supabase Auth
-- Creator profile editing
-- Creator membership tier drafts (inactive; no payments)
-- Creator media-link submissions with consent declaration and moderation status
-- Approved creator discovery and wellness resource listing
+## Creator monetization rules
+- Eligibility: 10,000 qualified streams
+- Qualified stream: at least 30 seconds of playback, with server-side heartbeat validation
+- Minimum payout: USD 20 equivalent
+- Payout currency: GMD
+- Schedule: monthly, after approval
+- FX rate: captured from the payout provider at processing time
 
-## Important launch checks
-- Configure robust age assurance appropriate to jurisdictions served.
-- Confirm RLS policies, storage access, and all five table schemas.
-- Add reporting, blocking, moderation operations, privacy policy, terms and a support contact.
-- Integrate a compliant payment provider before enabling paid memberships.
-- The age gate is not identity or age verification.
+Revenue shares are not hard-coded; the platform records creator earnings after the applicable commercial terms are configured.
+
+## Technical stack
+- Static HTML, CSS and JavaScript frontend
+- Supabase Auth, Postgres and Storage
+- Supabase Edge Function for authenticated stream heartbeats
+- Vercel hosting and GitHub source control
+
+## Important deployment notes
+The creator payout ledger and approval workflow are in place. Actual automatic disbursement requires a supported outgoing payout provider and its credentials. Rental and subscription checkout also require a payment provider configuration. Never expose the Supabase service-role key in browser code.
