@@ -3,3 +3,5 @@
 .monetization-card{margin:0 0 14px}.progress-track{height:10px;border-radius:99px;background:#0b0b10;border:1px solid #39333a;overflow:hidden;margin:14px 0}.progress-track span{display:block;width:0;height:100%;background:linear-gradient(90deg,#b77c3d,#ffe2a4);transition:width .25s}.monetization-card .muted{margin:8px 0 14px;line-height:1.7}.admin-monetization{margin-top:24px;padding-top:18px;border-top:1px solid #ffffff20}
 
 .google{display:flex;align-items:center;justify-content:center;gap:11px;background:#fff;color:#202124;border:1px solid #dadce0;padding:11px 14px;font-size:12px;font-weight:700}.google:hover{background:#f7f8fa}.google:disabled{opacity:.65;cursor:wait}.google-mark{font:bold 19px Arial,sans-serif;color:#4285f4}.auth-divider{display:flex;align-items:center;gap:12px;margin:15px 0;color:var(--muted);font-size:9px;letter-spacing:.12em}.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--line);flex:1}
+
+.movie-copy>.view-count{display:block;color:var(--muted);font-size:10px;letter-spacing:0;text-transform:none;margin-top:2px}
