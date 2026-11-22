@@ -30,3 +30,16 @@ body.tv-mode .movie h3{font-size:21px}
 body.tv-mode .movie p,body.tv-mode .movie-copy>small{font-size:14px}
 @media(min-width:1400px){.video-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.cover{height:240px}}
 @media(max-width:620px){.player-box{padding:16px}.player-box video{max-height:65vh}.player-fullscreen{margin-right:36px}}
+
+/* Keep TV mode readable on phones and tablets: four columns are only for wide screens. */
+@media (max-width: 900px) {
+  body.tv-mode .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  body.tv-mode .cover { height: clamp(190px, 32vw, 280px); }
+}
+@media (max-width: 620px) {
+  body.tv-mode .video-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  body.tv-mode .cover { height: 230px; }
+  body.tv-mode .movie-copy { padding: 16px; }
+  body.tv-mode .movie h3 { font-size: 19px; }
+  body.tv-mode .movie p { font-size: 14px; line-height: 1.6; }
+}
