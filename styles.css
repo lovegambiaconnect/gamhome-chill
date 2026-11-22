@@ -3,17 +3,3 @@
 .monetization-card{margin:0 0 14px}.progress-track{height:10px;border-radius:99px;background:#0b0b10;border:1px solid #39333a;overflow:hidden;margin:14px 0}.progress-track span{display:block;width:0;height:100%;background:linear-gradient(90deg,#b77c3d,#ffe2a4);transition:width .25s}.monetization-card .muted{margin:8px 0 14px;line-height:1.7}.admin-monetization{margin-top:24px;padding-top:18px;border-top:1px solid #ffffff20}
 
 .google{display:flex;align-items:center;justify-content:center;gap:11px;background:#fff;color:#202124;border:1px solid #dadce0;padding:11px 14px;font-size:12px;font-weight:700}.google:hover{background:#f7f8fa}.google:disabled{opacity:.65;cursor:wait}.google-mark{font:bold 19px Arial,sans-serif;color:#4285f4}.auth-divider{display:flex;align-items:center;gap:12px;margin:15px 0;color:var(--muted);font-size:9px;letter-spacing:.12em}.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--line);flex:1}
-
-/* Responsive multimedia movie player */
-.player-box{width:min(100%,1080px);max-height:94vh;overflow:auto;padding:clamp(16px,3vw,28px);padding-top:48px}
-.player-heading{padding-right:36px;margin-bottom:12px}
-.player-heading .eyebrow{margin:0 0 4px;color:var(--gold);font-size:10px;letter-spacing:.16em}
-.player-heading h3{margin:0;font:800 clamp(19px,3vw,26px) Manrope,Arial,sans-serif}
-.player-box video{display:block;width:100%;max-height:68vh;aspect-ratio:16/9;object-fit:contain;background:#000;border-radius:8px}
-.player-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:12px 0}
-.player-toolbar label{color:var(--muted);font-size:12px}
-.player-toolbar select,.player-tool{min-height:36px;padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:#101017;color:var(--text)}
-.player-tool{font-size:12px}
-.player-tool:hover{border-color:var(--gold);color:var(--gold2)}
-.player-status{min-height:1.5em;margin:5px 0;color:var(--gold2);font-size:13px}
-@media(max-width:600px){.modal{padding:8px}.player-box{width:100%;max-height:96vh;padding:44px 12px 14px}.player-box video{max-height:58vh}.player-toolbar{gap:7px}.player-toolbar label{width:100%}}
