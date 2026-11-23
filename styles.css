@@ -8,3 +8,6 @@
 
 /* Keep both overlapping book covers fully visible on phones. */
 @media(max-width:620px){.hero-art{overflow:visible}.poster{width:190px;height:270px;padding:18px}.poster.back{transform:translate(-58px,10px) rotate(-9deg)}.poster.front{transform:translate(32px,-6px) rotate(6deg)}.poster.front strong{font-size:25px}}
+
+/* Creator video upload guidance */
+.video-upload-guide{margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:10px;background:#ffffff06;font-size:12px;line-height:1.55}.video-upload-guide>b{color:var(--gold2);font-size:13px}.video-upload-guide ol{margin:8px 0;padding-left:20px}.video-upload-guide li{margin:4px 0}.video-upload-guide p{margin:8px 0}.video-upload-guide a{color:var(--gold2);text-decoration:underline}.video-upload-guide small{display:block;color:var(--muted)}.video-format-notice{font-size:12px;margin:8px 0;padding:9px 11px;border-radius:8px}.video-format-notice:empty{display:none}.video-format-notice.warn{background:#9b641d22;color:#ffd18a;border:1px solid #9b641d66}.video-format-notice.good{background:#247a4822;color:#9be0b2;border:1px solid #247a4866}
