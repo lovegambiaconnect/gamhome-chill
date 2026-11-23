@@ -10,7 +10,7 @@ async function continueWithGoogle(){if(!db){say("#authMessage","Sign-in is tempo
 $("#googleAuthBtn").onclick=continueWithGoogle;
 // TV-friendly mode: larger targets and directional-key navigation for compatible TV remotes.
 const tvModeButton=$("#tvModeBtn");
-function setTvMode(enabled){document.body.classList.toggle("tv-mode",enabled);if(tvModeButton){tvModeButton.setAttribute("aria-pressed",String(enabled));tvModeButton.textContent=enabled?"Exit TV mode":"TV mode"}try{localStorage.setItem("gamhome_tv_mode",enabled?"1":"0")}catch(e){}}
+function setTvMode(enabled){document.body.classList.toggle("tv-mode",enabled);if(tvModeButton){tvModeButton.setAttribute("aria-pressed",String(enabled));tvModeButton.textContent=enabled?"Exit TV mode":"TV mode";tvModeButton.title=enabled?"Return to standard layout":"Use the larger TV layout and remote-friendly navigation"}try{localStorage.setItem("gamhome_tv_mode",enabled?"1":"0")}catch(e){}if(enabled){setTimeout(()=>{const first=visibleFocusable()[0];if(first)first.focus()},80);if(typeof toast==="function")toast("TV mode on — use your remote arrows and OK/Enter.")}else if(typeof toast==="function")toast("Standard layout restored.")}
 try{setTvMode(localStorage.getItem("gamhome_tv_mode")==="1")}catch(e){setTvMode(false)}
 if(tvModeButton)tvModeButton.onclick=()=>setTvMode(!document.body.classList.contains("tv-mode"));
 function visibleFocusable(){return [...document.querySelectorAll('a[href],button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]')].filter(el=>!el.closest(".hidden")&&el.getClientRects().length&&getComputedStyle(el).visibility!=="hidden")}
