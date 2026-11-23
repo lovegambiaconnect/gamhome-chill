@@ -100,3 +100,19 @@ html.tv-mode .player-box:fullscreen, .player-box:fullscreen {
 .player-box:fullscreen #closePlayer { position:absolute; top:12px; right:16px; z-index:5; }
 @media (max-width:900px) { html.tv-mode .video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:620px) { html.tv-mode .video-grid { grid-template-columns:1fr; } }
+
+
+/* Video.js media player: consistent controls, responsive sizing and TV fullscreen. */
+.player-box{width:min(96vw,1200px);max-width:1200px;padding:clamp(12px,2vw,24px);}
+.player-box .video-js{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;font-family:"DM Sans",Arial,sans-serif;}
+.player-box .video-js .vjs-tech{width:100%;height:100%;object-fit:contain;}
+.player-box .video-js .vjs-control-bar{font-size:14px;background:linear-gradient(transparent,#08080beF);}
+.player-box .video-js .vjs-big-play-button{border:2px solid #ffe2a4;background:#17120acc;border-radius:50%;width:2.8em;height:2.8em;line-height:2.55em;margin:0;left:50%;top:50%;transform:translate(-50%,-50%);}
+.player-box .video-js .vjs-play-progress,.player-box .video-js .vjs-volume-level{background:#e8bd67;}
+.player-box .video-js .vjs-slider{background:#777;}
+.player-box:fullscreen,.player-box:-webkit-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:0!important;}
+.player-box:fullscreen .video-js,.player-box:-webkit-full-screen .video-js{width:100vw!important;height:100vh!important;max-height:100vh!important;aspect-ratio:auto!important;border-radius:0!important;}
+.player-box:fullscreen .video-js .vjs-tech,.player-box:-webkit-full-screen .video-js .vjs-tech{object-fit:contain!important;}
+.player-box:fullscreen #playerTitle,.player-box:-webkit-full-screen #playerTitle{margin:0;padding:8px 16px;background:#000;color:#fff;font-size:clamp(16px,2vw,28px);}
+.player-box:fullscreen #closePlayer,.player-box:-webkit-full-screen #closePlayer{z-index:20;top:10px;right:12px;}
+@media(max-width:620px){.player-box{width:100%;padding:12px}.player-box .video-js{aspect-ratio:16/9}.player-box:fullscreen .video-js,.player-box:-webkit-full-screen .video-js{height:100vh!important}}
