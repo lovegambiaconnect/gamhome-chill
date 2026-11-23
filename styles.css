@@ -7,4 +7,3 @@
 .movie-copy>.view-count{display:block;color:var(--muted);font-size:10px;letter-spacing:0;text-transform:none;margin-top:2px}
 
 /* Keep decorative hero artwork within the viewport on small screens. */
-@media(max-width:620px){.hero-art{overflow:hidden;}}
