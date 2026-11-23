@@ -64,3 +64,39 @@ body.tv-mode .movie p{font-size:16px;line-height:1.5}
 .player-box:fullscreen #playerTitle{flex:0 0 auto;margin:0 0 4px;font-size:clamp(16px,2vw,28px)}
 @media(max-width:900px){body.tv-mode .video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}body.tv-mode .cover{height:clamp(220px,34vw,320px)}}
 @media(max-width:620px){body.tv-mode .video-grid{grid-template-columns:1fr}body.tv-mode .topbar{min-height:72px}body.tv-mode .hero{min-height:0}body.tv-mode .cover{height:250px}}
+
+/* Smart TV: a clear, full-width viewing layout and native full-screen video. */
+html.tv-mode, html.tv-mode body { min-height:100%; background:#050508; }
+html.tv-mode body { color:#fff; font-size:20px; }
+html.tv-mode .wrap { width:94vw; max-width:1900px; }
+html.tv-mode .topbar { min-height:84px; height:auto; padding:14px 3vw; background:#090910; border-bottom:2px solid var(--gold); }
+html.tv-mode .brand { font-size:clamp(20px,1.8vw,30px); }
+html.tv-mode nav { gap:clamp(18px,2vw,36px); font-size:clamp(16px,1.2vw,22px); }
+html.tv-mode .actions { gap:14px; }
+html.tv-mode .btn, html.tv-mode .filter, html.tv-mode .watch { min-height:52px; font-size:clamp(16px,1.15vw,21px); padding:14px 22px; }
+html.tv-mode .hero { width:94vw; max-width:1900px; min-height:62vh; padding:4vh 3vw; }
+html.tv-mode .hero h1 { font-size:clamp(48px,5.2vw,100px); }
+html.tv-mode .section-head h2 { font-size:clamp(32px,3vw,54px); }
+html.tv-mode .video-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(18px,2vw,34px); }
+html.tv-mode .cover { height:clamp(230px,20vw,400px); }
+html.tv-mode .movie-copy { padding:clamp(16px,1.5vw,26px); }
+html.tv-mode .movie h3 { font-size:clamp(20px,1.55vw,29px); }
+html.tv-mode .movie p { font-size:clamp(14px,1vw,19px); line-height:1.55; }
+html.tv-mode :focus-visible { outline:4px solid #ffe2a4!important; outline-offset:5px!important; box-shadow:0 0 0 8px #e8bd6740; }
+html.tv-mode .player-box:fullscreen, .player-box:fullscreen {
+ position:fixed!important; inset:0!important; box-sizing:border-box!important;
+ width:100vw!important; height:100vh!important; max-width:none!important; max-height:none!important;
+ margin:0!important; padding:2vh 2vw!important; transform:none!important;
+ border:0!important; border-radius:0!important; background:#000!important;
+ display:grid!important; grid-template-rows:auto minmax(0,1fr) auto!important;
+ align-items:stretch!important; justify-items:stretch!important; gap:10px!important;
+}
+.player-box:fullscreen video, video:fullscreen {
+ display:block!important; width:100vw!important; height:100vh!important;
+ min-width:100vw!important; min-height:100vh!important; max-width:100vw!important; max-height:100vh!important;
+ margin:0!important; padding:0!important; object-fit:contain!important; background:#000!important;
+}
+.player-box:fullscreen #playerTitle { margin:0!important; font-size:clamp(16px,2vw,28px)!important; }
+.player-box:fullscreen #closePlayer { position:absolute; top:12px; right:16px; z-index:5; }
+@media (max-width:900px) { html.tv-mode .video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:620px) { html.tv-mode .video-grid { grid-template-columns:1fr; } }
