@@ -217,3 +217,28 @@ html.tv-mode .player-box:fullscreen, .player-box:fullscreen {
 .player-box:-webkit-full-screen .video-js .vjs-control-bar {
   bottom: 0 !important;
 }
+
+/* Mobile watch screen: size the player to the actual source orientation. */
+.player-box.is-portrait {
+  width: min(100%, 560px) !important;
+  max-width: 560px !important;
+}
+.player-box.is-portrait .video-js {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 82dvh !important;
+  aspect-ratio: 9 / 16 !important;
+  padding-top: 177.78% !important;
+}
+.player-box.is-portrait .video-js .vjs-tech {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+@media (max-width: 620px) {
+  #playerModal.modal { padding: 8px; }
+  #playerModal .player-box { width: 100%; max-width: 100%; padding: 10px; }
+  #playerModal .player-box.is-portrait { width: 100% !important; max-width: 100% !important; }
+  #playerModal .player-box.is-portrait .video-js { max-height: 78dvh !important; }
+  #playerModal .player-box:not(.is-portrait) .video-js { width: 100%; max-height: 78dvh; }
+}
