@@ -316,3 +316,53 @@ html.tv-mode .player-box:fullscreen, .player-box:fullscreen {
   }
   #playerModal .player-box .video-js { max-height:calc(100dvh - 30px)!important; }
 }
+
+
+/* iPhone Watch Now: use nearly the full phone viewport before fullscreen. */
+@media (max-width: 620px) {
+  #playerModal.modal {
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  #playerModal .player-box {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    gap: 0 !important;
+    background: #000 !important;
+  }
+  #playerModal .player-box .video-js {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: calc(100dvh - 30px) !important;
+    margin: 0 !important;
+  }
+  #playerModal .player-box.is-portrait {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+  #playerModal .player-box.is-portrait .video-js {
+    width: 100vw !important;
+    height: auto !important;
+    aspect-ratio: 9 / 16 !important;
+    padding-top: 0 !important;
+    max-height: calc(100dvh - 30px) !important;
+  }
+  #playerModal .player-box:not(.is-portrait) .video-js {
+    width: 100vw !important;
+    aspect-ratio: 16 / 9 !important;
+    max-height: 82dvh !important;
+  }
+  #playerModal .player-box .video-js .vjs-tech {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
