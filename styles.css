@@ -5,3 +5,6 @@
 .google{display:flex;align-items:center;justify-content:center;gap:11px;background:#fff;color:#202124;border:1px solid #dadce0;padding:11px 14px;font-size:12px;font-weight:700}.google:hover{background:#f7f8fa}.google:disabled{opacity:.65;cursor:wait}.google-mark{font:bold 19px Arial,sans-serif;color:#4285f4}.auth-divider{display:flex;align-items:center;gap:12px;margin:15px 0;color:var(--muted);font-size:9px;letter-spacing:.12em}.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--line);flex:1}
 
 .movie-copy>.view-count{display:block;color:var(--muted);font-size:10px;letter-spacing:0;text-transform:none;margin-top:2px}
+
+/* Keep decorative hero artwork within the viewport on small screens. */
+@media(max-width:620px){.hero-art{overflow:hidden;}}
