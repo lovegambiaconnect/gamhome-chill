@@ -6,4 +6,5 @@
 
 .movie-copy>.view-count{display:block;color:var(--muted);font-size:10px;letter-spacing:0;text-transform:none;margin-top:2px}
 
-/* Keep decorative hero artwork within the viewport on small screens. */
+/* Keep both overlapping book covers fully visible on phones. */
+@media(max-width:620px){.hero-art{overflow:visible}.poster{width:190px;height:270px;padding:18px}.poster.back{transform:translate(-58px,10px) rotate(-9deg)}.poster.front{transform:translate(32px,-6px) rotate(6deg)}.poster.front strong{font-size:25px}}
