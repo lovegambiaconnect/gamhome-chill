@@ -116,3 +116,33 @@ html.tv-mode .player-box:fullscreen, .player-box:fullscreen {
 .player-box:fullscreen #playerTitle,.player-box:-webkit-full-screen #playerTitle{margin:0;padding:8px 16px;background:#000;color:#fff;font-size:clamp(16px,2vw,28px);}
 .player-box:fullscreen #closePlayer,.player-box:-webkit-full-screen #closePlayer{z-index:20;top:10px;right:12px;}
 @media(max-width:620px){.player-box{width:100%;padding:12px}.player-box .video-js{aspect-ratio:16/9}.player-box:fullscreen .video-js,.player-box:-webkit-full-screen .video-js{height:100vh!important}}
+
+
+/* Fullscreen TV fix: let the video surface own the viewport; no title row underneath. */
+.player-box:fullscreen,
+.player-box:-webkit-full-screen {
+  position:fixed!important; inset:0!important;
+  display:block!important; width:100vw!important; height:100vh!important;
+  min-width:100vw!important; min-height:100vh!important;
+  max-width:none!important; max-height:none!important;
+  margin:0!important; padding:0!important; gap:0!important;
+  overflow:hidden!important; background:#000!important;
+}
+.player-box:fullscreen .video-js,
+.player-box:-webkit-full-screen .video-js {
+  position:absolute!important; inset:0!important;
+  display:block!important; width:100vw!important; height:100vh!important;
+  min-width:100vw!important; min-height:100vh!important;
+  max-width:100vw!important; max-height:100vh!important;
+  margin:0!important; padding:0!important; aspect-ratio:auto!important;
+}
+.player-box:fullscreen .video-js .vjs-tech,
+.player-box:-webkit-full-screen .video-js .vjs-tech {
+  position:absolute!important; inset:0!important;
+  width:100%!important; height:100%!important;
+  object-fit:contain!important; object-position:center center!important;
+}
+.player-box:fullscreen #playerTitle,
+.player-box:-webkit-full-screen #playerTitle { display:none!important; }
+.player-box:fullscreen #closePlayer,
+.player-box:-webkit-full-screen #closePlayer { position:absolute!important; z-index:30!important; top:12px!important; right:16px!important; }
