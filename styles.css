@@ -146,3 +146,23 @@ html.tv-mode .player-box:fullscreen, .player-box:fullscreen {
 .player-box:-webkit-full-screen #playerTitle { display:none!important; }
 .player-box:fullscreen #closePlayer,
 .player-box:-webkit-full-screen #closePlayer { position:absolute!important; z-index:30!important; top:12px!important; right:16px!important; }
+
+
+/* Edge-to-edge Smart TV fullscreen: cover the entire screen, cropping edges if aspect ratios differ. */
+.player-box:fullscreen .video-js .vjs-tech,
+.player-box:-webkit-full-screen .video-js .vjs-tech,
+.player-box:fullscreen video,
+.player-box:-webkit-full-screen video {
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+.player-box:fullscreen .video-js,
+.player-box:-webkit-full-screen .video-js {
+  width:100vw!important;
+  height:100vh!important;
+  max-width:100vw!important;
+  max-height:100vh!important;
+  aspect-ratio:auto!important;
+}
