@@ -2,7 +2,7 @@
 const cfg=window.GAMHOME_CONFIG||{}, ready=!!(cfg.supabaseUrl&&cfg.supabaseAnonKey), db=ready&&window.supabase?window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey):null;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)], esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const MONETIZATION_TARGET=20000;
-let user=null,mode="signup",allVideos=[],genre="all",query="",currentVideoId=null,lastVideoTime=0,watchedSeconds=0,lastHeartbeat=0;
+let user=null,mode="signup",allVideos=[],genre="all",query="",currentVideoId=null,lastVideoTime=0,watchedSeconds=0,lastHeartbeat=0,viewRecordedForCurrentPlay=false,viewerTokenCache=null;
 const say=(id,t,bad=false)=>{const e=$(id);if(e){e.textContent=t;e.classList.toggle("bad",bad)}};
 const toast=t=>{const e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3000)};
 function auth(m){mode=m;$("#authModal").classList.remove("hidden");$("#authTitle").textContent=m==="signup"?"Join the community.":"Welcome back.";$("#nameField").classList.toggle("hidden",m==="signin");$("#authSubmit").textContent=m==="signup"?"Create account":"Sign in";$$(".tabs button").forEach(b=>b.classList.toggle("active",b.dataset.mode===m));say("#authMessage","")}
@@ -28,10 +28,50 @@ function renderVideos(){const list=allVideos.filter(v=>(genre==="all"||(v.genre|
 $("#videoGrid").onclick=e=>{const b=e.target.closest("[data-play]");if(b)play(b.dataset.play)};
 $("#filters").onclick=e=>{const b=e.target.closest("[data-genre]");if(!b)return;genre=b.dataset.genre;$$(".filter").forEach(x=>x.classList.toggle("active",x===b));renderVideos()};
 $("#searchForm").onsubmit=e=>e.preventDefault();$("#searchInput").oninput=e=>{query=e.target.value.trim().toLowerCase();renderVideos()};
+function getViewerToken(){
+  if(viewerTokenCache)return viewerTokenCache;
+  const storageKey="gamhome_viewer_token_v1";
+  const createToken=()=>{
+    if(window.crypto&&typeof window.crypto.randomUUID==="function")return window.crypto.randomUUID();
+    const bytes=new Uint8Array(24);
+    if(window.crypto&&typeof window.crypto.getRandomValues==="function")window.crypto.getRandomValues(bytes);
+    else for(let i=0;i<bytes.length;i++)bytes[i]=Math.floor(Math.random()*256);
+    return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("");
+  };
+  try{
+    let token=localStorage.getItem(storageKey);
+    if(!token||token.length<16||token.length>200){token=createToken();localStorage.setItem(storageKey,token)}
+    viewerTokenCache=token;
+  }catch(e){
+    try{
+      let token=sessionStorage.getItem(storageKey);
+      if(!token||token.length<16||token.length>200){token=createToken();sessionStorage.setItem(storageKey,token)}
+      viewerTokenCache=token;
+    }catch(storageError){viewerTokenCache=createToken()}
+  }
+  return viewerTokenCache;
+}
+async function recordVideoView(videoId){
+  if(!db)return false;
+  try{
+    const {data,error}=await db.rpc("gamhome_record_video_view",{p_video_id:videoId,p_viewer_token:getViewerToken()});
+    if(error)throw error;
+    const count=Number(data);
+    if(!Number.isFinite(count))throw new Error("The view counter returned an invalid total.");
+    const video=allVideos.find(item=>item.id===videoId);
+    if(video)video.view_count=count;
+    const counter=$$("[data-view-count]").find(el=>el.dataset.viewCount===videoId);
+    if(counter)counter.textContent=count.toLocaleString()+" views";
+    return true;
+  }catch(error){
+    console.warn("Video view recording failed",error);
+    return false;
+  }
+}
 async function play(id){const v=allVideos.find(x=>x.id===id);if(!v)return;if(v.subscription_required||Number(v.rental_price_gmd)>0){toast("This title requires a rental or subscription checkout, which is not active yet.");return}const p=$("#player");try{const response=await fetch("/api/r2-play?videoId="+encodeURIComponent(id));const result=await response.json();if(!response.ok||!result.url)throw new Error(result.error||"Could not create a secure playback link.");currentVideoId=id;lastVideoTime=0;watchedSeconds=0;lastHeartbeat=0;viewRecordedForCurrentPlay=false;$("#playerTitle").textContent=v.title;$("#playerDescription").textContent=v.description||"";p.pause();p.removeAttribute("src");p.setAttribute("controlsList","nodownload noremoteplayback");p.disablePictureInPicture=true;p.playsInline=true;p.src=result.url;p.preload="metadata";p.load();$("#playerModal").classList.remove("hidden");try{await p.play()}catch(playError){toast("Your video is ready. Tap Play on the video controls to start.")}}catch(err){toast(err.message||"Could not open this video.")}}
 async function sendStreamHeartbeat(videoId,seconds){if(!user||!db)return;const {data}=await db.auth.getSession();const token=data.session?.access_token;if(!token)return;try{await fetch(cfg.supabaseUrl+"/functions/v1/gamhome-stream-heartbeat",{method:"POST",headers:{"Authorization":"Bearer "+token,"apikey":cfg.supabaseAnonKey,"Content-Type":"application/json"},body:JSON.stringify({video_id:videoId,watched_seconds:Math.floor(seconds)})})}catch(e){console.warn("Stream heartbeat failed",e)}}
 $("#player").addEventListener("error",()=>{const p=$("#player");if(!currentVideoId||!p.error)return;const code=p.error.code;const message=code===4?"This video format is not supported by this device. Use MP4 with H.264 video and AAC audio.":code===3?"This video could not be decoded by this device. The file may need conversion to MP4 (H.264 video + AAC audio) before it can play.":"The video could not be loaded. Check your connection and try again.";toast(message)});
-$("#player").addEventListener("playing",()=>{if(currentVideoId&&!viewRecordedForCurrentPlay){viewRecordedForCurrentPlay=true;recordVideoView(currentVideoId)}});
+$("#player").addEventListener("playing",()=>{if(currentVideoId&&!viewRecordedForCurrentPlay){const videoId=currentVideoId;recordVideoView(videoId).then(recorded=>{if(recorded&&currentVideoId===videoId)viewRecordedForCurrentPlay=true})}});
 $("#player").addEventListener("timeupdate",()=>{const p=$("#player");if(p.paused||!currentVideoId)return;const t=p.currentTime,delta=t-lastVideoTime;if(delta>0&&delta<2)watchedSeconds+=delta;lastVideoTime=t;if(watchedSeconds-lastHeartbeat>=15){lastHeartbeat=watchedSeconds;sendStreamHeartbeat(currentVideoId,watchedSeconds)}});
 function closePlayer(){currentVideoId=null;const p=$("#player");p.pause();p.removeAttribute("src");p.load();$("#playerModal").classList.add("hidden")}
 async function enterPlayerFullscreen(){const video=$("#player"),box=$("#playerModal .player-box");try{if(document.fullscreenElement){await document.exitFullscreen();return}if(video.requestFullscreen){await video.requestFullscreen();return}if(video.webkitEnterFullscreen){video.webkitEnterFullscreen();return}if(box.requestFullscreen){await box.requestFullscreen();return}toast("Full-screen is not supported by this browser.")}catch(e){toast("Could not enter full-screen mode on this device.")}}
